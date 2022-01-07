@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-from utils import is_valid_board, get_indexes_of_all_unsolved_cells, create_posibility_board, get_sections, get_unsolved_cells, get_cell_by_index, get_solved_numbers_in_section, get_solved_and_unsolved, subtract_imposible_numbers_from_section, solve_section, create_solved_board, get_unsolved_numbers_in_section, get_box_by_cell_index
+from utils import is_valid_board, get_indexes_of_all_unsolved_cells, create_posibility_board, get_sections, get_unsolved_cells, get_cell_by_index, get_solved_numbers_in_section, get_solved_and_unsolved, subtract_imposible_numbers_from_section, solve_section, create_solved_board, get_unsolved_in_section, get_box_by_cell_index
 
 # board = np.array([
 #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -64,9 +64,7 @@ board = np.array([
 ])
 
 # Validate board and exit if not valid
-rows, columns, boxes = get_sections(board)
-valid_board = is_valid_board(rows, columns, boxes)
-if not valid_board:
+if not is_valid_board(board):
     print('Board is not valid')
     sys.exit()
 
@@ -117,7 +115,7 @@ rows, columns, boxes = get_sections(board)
 
 # TODO: change to 9
 for row_num in range(1):
-    unsolved_numbers, unsolved_indexes = get_unsolved_numbers_in_section(
+    unsolved_numbers, unsolved_indexes = get_unsolved_in_section(
         rows[row_num])
 
     print(unsolved_numbers, unsolved_indexes)

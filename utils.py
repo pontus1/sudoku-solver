@@ -1,50 +1,71 @@
 import numpy as np
 
-# -------------- #
-# ORIGINAL BOARD #
-# -------------- #
+# -------- #
+# 2D BOARD #
+# -------- #
 
 
-def get_sections(board):
-    # array
-    rows = [board[row_num] for row_num in range(len(board))]
+def get_sections(board: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+        Get sections from a board
 
-    # matrix
-    columns = [board[:, column_num:column_num + 1]
-               for column_num in range(len(board))]
-    # matrix
-    boxes = [
+        Parameters
+        ----------
+        board:  ndarray
+            2d array of board
+
+        Returns
+        -------
+        tuple:  array of 9 rows, array of 9 columns, array of 9 boxes
+    """
+    rows = np.array([board[row_num] for row_num in range(len(board))])
+
+    columns = np.array([board[:, col_num:col_num + 1]
+                        for col_num in range(len(board))]).reshape(9, 9)
+
+    boxes = np.array([
         board[:3, :3], board[:3, 3:6], board[:3, 6:],
         board[3:6, :3], board[3:6, 3:6], board[3:6, 6:],
         board[6:, :3], board[6:, 3:6], board[6:, 6:]
-    ]
-    # c = np.squeeze(np.asarray(columns))
-    # b = [box.flatten() for box in boxes]
+    ]).reshape(9, 9)
+
     return (rows, columns, boxes)
 
 
-def contains_duplicates(cells) -> bool:
+def contains_duplicates(section: np.ndarray) -> bool:
     """
         Check if a section contains the same number more than once
-        (0 is excepted)
+        (0 does not count)
 
-        :param cells: array of cells
-        :return:      True if section contains duplicates, otherwise False
+        Parameters
+        ----------
+        section: ndarray
+            2d array - a row, column or box from board
+
+        Returns
+        -------
+        bool:   True if section contains duplicates, otherwise False
     """
-    non_zero_cells = cells[np.nonzero(cells)]
+    non_zero_cells = section[np.nonzero(section)]
     return len(np.unique(non_zero_cells)) != len(non_zero_cells)
 
 
-def is_valid_board(rows, columns, boxes) -> bool:
+def is_valid_board(board: np.ndarray) -> bool:
     """
-        Check to see if every section of original board only contains unique numbers
-        (except 0; which counts as a nan)
+        Check to see if every section of board only contains unique numbers
+        (0 does not count)
 
-        :param rows:    array of rows
-        :param columns: array of columns
-        :param boxes:   array of boxes
-        :return:        True if board is valid, otherwise False
+        Parameters
+        ----------
+        board: ndarray
+            2d array of board
+
+        Returns
+        -------
+        bool:   True if board is valid, otherwise False
     """
+    rows, columns, boxes = get_sections(board)
+
     for row in rows:
         if contains_duplicates(row):
             return False
@@ -58,53 +79,80 @@ def is_valid_board(rows, columns, boxes) -> bool:
     return True
 
 
-def get_unsolved_numbers_in_section(cells):
+def get_unsolved_in_section(section: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """
-        Get tuple of unsolved numbers and unsolved indexes from a section in original board (2d)
-        [5 3 0 0 7 0 0 0 0] ->
-        unsolved_numbers: [1 2 4 6 8 9]
-        unsolved_indexes: [2 3 5 6 7 8]
+        Get a tuple of unsolved- numbers and indexes from a section in board (2d)
 
-        :param cells:   row, column or box from original board
-        :return:        (unsolved numbers, unsolved indexes)
+        Parameters
+        ----------
+        board: ndarray
+            2d array - a row, column or box from board
+
+        Returns
+        -------
+        tuple:  all unsolved numbers in section, all unsolved indexes in section
+
+        Examples
+        --------
+        >>> numbers, indexes = get_unsolved_in_section([5 3 0 0 7 0 0 0 0])
+        >>> numbers
+        [1 2 4 6 8 9]
+        >>> indexes
+        [2 3 5 6 7 8]
     """
     temp = np.arange(1, 10)
-    indices = np.argwhere(np.isin(temp, cells))
+    indices = np.argwhere(np.isin(temp, section))
     unsolved_numbers = np.delete(temp, indices)
-    unsolved_indexes = np.argwhere(np.isin(cells, 0)).flatten()
+    unsolved_indexes = np.argwhere(np.isin(section, 0)).flatten()
     return (unsolved_numbers, unsolved_indexes)
 
 
-def get_indexes_of_all_unsolved_cells(board):
+def get_indexes_of_all_unsolved_cells(board: np.ndarray) -> np.ndarray:
     """
-        Get indexes of all unsolved cells from original board.
-        [[1 0 0], [0 1 0], [0 0 1]] -> [[0 1][0 2][1 0][1 2][2 0][2 1]]
+        Get indexes of all unsolved cells from 2d board.
 
-        :param board:   original board
-        :return:        indexes of all unsolved cells
+        Parameters
+        ----------
+        board: ndarray
+            2d array of board
+
+        Returns
+        -------
+        ndarray:  array containing all indexes of unsolved cells
+
+        Examples
+        --------
+        Check a 3*3 board:
+
+        >>> board = np.array([[1 0 0], [0 1 0], [0 0 1]])
+        >>> indexes = get_indexes_of_all_unsolved_cells(board)
+        >>> indexes
+        [[0 1][0 2][1 0][1 2][2 0][2 1]]
+        >>> len(indexes)
+        6
     """
     return np.argwhere(board == 0)
 
 
-def get_box_index(cell_row, cell_column):
-    if cell_row < 3:  # 0, 1, 2
-        if cell_column < 3:
-            return 0
-        if cell_column < 6:
-            return 1
-        return 2
-    elif cell_row < 6:  # 3, 4, 5
-        if cell_column < 3:
-            return 3
-        if cell_column < 6:
-            return 4
-        return 5
-    else:  # 6, 7, 8
-        if cell_column < 3:
-            return 6
-        if cell_column < 6:
-            return 7
-        return 8
+# def get_box_index(cell_row, cell_column):
+#     if cell_row < 3:  # 0, 1, 2
+#         if cell_column < 3:
+#             return 0
+#         if cell_column < 6:
+#             return 1
+#         return 2
+#     elif cell_row < 6:  # 3, 4, 5
+#         if cell_column < 3:
+#             return 3
+#         if cell_column < 6:
+#             return 4
+#         return 5
+#     else:  # 6, 7, 8
+#         if cell_column < 3:
+#             return 6
+#         if cell_column < 6:
+#             return 7
+#         return 8
 
 # ---------------- #
 # POSIBILITY BOARD #
