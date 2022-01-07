@@ -1,7 +1,7 @@
 import numpy as np
 import sys
 from validation import is_valid_board
-from utils import get_indexes_of_all_unsolved_cells, create_posibility_board, get_sections, get_unsolved_cells, get_cell_by_index, get_solved_numbers_in_section, get_solved_and_unsolved, subtract_imposible_numbers_from_section, solve_section, create_solved_board, get_unsolved_in_section, get_box_by_cell_index
+from utils import get_indexes_of_all_unsolved_cells, get_posibility_matrix, get_sections, get_unsolved_cells, solve_section, create_solved_board, get_unsolved_in_section, get_box_by_cell_index
 
 # board = np.array([
 #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -51,7 +51,7 @@ from utils import get_indexes_of_all_unsolved_cells, create_posibility_board, ge
 #     [0, 0, 0, 9, 0, 0, 6, 0, 0],
 #     [6, 0, 1, 0, 3, 0, 0, 0, 0]
 # ])
-# EASY SOLVED BY FIRST ALGORITM
+# EASY - SOLVED BY FIRST ALGORITM
 board = np.array([
     [0, 5, 0, 3, 1, 4, 0, 6, 0],
     [8, 7, 0, 0, 0, 9, 4, 0, 3],
@@ -76,7 +76,7 @@ number_of_solved_cells = total_number_of_cells - unsolved_cells
 print(f'Solved cells when starting: {number_of_solved_cells}\n')
 
 # create posibility board (3d matrix)
-posibility_board = create_posibility_board(board)
+posibility_board = get_posibility_matrix(board)
 
 
 while True:

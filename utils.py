@@ -107,63 +107,67 @@ def get_indexes_of_all_unsolved_cells(board: np.ndarray) -> np.ndarray:
 #             return 7
 #         return 8
 
-# ---------------- #
-# POSIBILITY BOARD #
-# ---------------- #
+# -------------------- #
+# 3D POSIBILITY MATRIX #
+# -------------------- #
 
 
-def create_posibility_board(original_board):
-    # create board by copying original and adding a third dimension
-    # all values will be duplicated 9 times, i.e [5] -> [5 5 5 5 5 5 5 5 5]
-    pb = np.repeat(np.copy(original_board)[:, :, np.newaxis], 9, axis=2)
-    # fill unsolved cells/arrays with posibilities ([0 0 0 0 0 0 0 0 0] -> [1 2 3 4 5 6 7 8 9])
-    # replace solced cells/arrays with zeros exept for the solved value at that index -1 ([5 5 5 5 5 5 5 5 5] -> [0 0 0 0 5 0 0 0 0])
-    posibilities = np.arange(1, 10)
+def get_posibility_matrix(board: np.ndarray) -> np.ndarray:
+    """
+        Creates a 3d matrix from original 2d board where all cells become arrays of possible numbers.
+        Each cell of the 2d board will generate a third axis in its place.
+        A unsolved cell will generate an array with all possibilities are included
+        (0 -> [1 2 3 4 5 6 7 8 9])
+        A solved cell will generate an array where all indexes are set to 0 except for index n-1
+        that will be set to n
+        (1 -> [1 0 0 0 0 0 0 0 0])
+        (5 -> [0 0 0 0 5 0 0 0 0])
+
+        Parameters
+        ----------
+        board: ndarray
+            2d array of board
+
+        Returns
+        -------
+        ndarray: 3d matrix representing all posibilities on board passed as arg
+    """
+    posibilities = np.repeat(np.copy(board)[:, :, np.newaxis], 9, axis=2)
+    all_posibilities = np.arange(1, 10)
     for i in range(9):
         for j in range(9):
-            # current value (0 or a solved value)
-            val = pb[i:i+1, j:j+1, :1]
+            val = posibilities[i:i+1, j:j+1, :1]  # 0 or a solved value
             if val == 0:
-                pb[i:i+1, j:j+1] = posibilities
+                posibilities[i:i+1, j:j+1] = all_posibilities
             else:
                 new_arr = np.zeros(9)
                 new_arr[val-1] = val
-                # replace with 0 at all index but right
-                pb[i:i+1, j:j+1] = new_arr
-    return pb
+                posibilities[i:i+1, j:j+1] = new_arr
+    return posibilities
 
 
-def get_unsolved_cells(posibility_board):
-    # plocka ut celler/arrayer där len(non_zeros) != 1
-    temp_list = []
+def get_unsolved_cells(posibility_matrix: np.ndarray) -> np.ndarray:
+    """
+        Get an array of indexes of all unsolved cells in posibility matrix
+        where each index is represented by [row index, column index]
+        e.g. [[0 0][0 4][3 2][3 8]]
+
+        Parameters
+        ----------
+        posibility_matrix: ndarray
+            3d matrix of posibilities
+
+        Returns
+        -------
+        ndarray: 2d array representing all unsolved cell indexes
+    """
+    unsolved_indexes = []
     for i in range(9):
         for j in range(9):
-            non_zeros = np.count_nonzero(posibility_board[i:i+1, j:j+1])
+            non_zeros = np.count_nonzero(posibility_matrix[i:i+1, j:j+1])
             if non_zeros != 1:
-                temp_list.append([i, j])
-    return np.array(temp_list)
-
-
-def get_cell_by_index(posibility_board, cell):
-    return posibility_board[cell[0]:cell[0]+1, cell[1]:cell[1]+1]
-
-
-def get_solved_numbers_in_section(cells):
-    """
-        Get array of solved numbers in section (row, column, box)
-
-        :param cells: a section of posibility board
-        :return:      a flat array of solved numbers in section
-    """
-    temp_list = []
-    for i in range(9):
-        non_zeros = np.count_nonzero(cells[0][i])
-        if non_zeros == 1:
-            index_of_solved_value = np.nonzero(cells[0][i])
-            temp_list.append(cells[0][i][index_of_solved_value])
-
-    temp_list = np.array(temp_list).flatten()
-    return temp_list
+                unsolved_indexes.append([i, j])
+    return np.array(unsolved_indexes)
 
 
 def get_solved_and_unsolved(cells):
@@ -192,7 +196,7 @@ def get_solved_and_unsolved(cells):
     solved_numbers = np.array(solved_numbers).flatten()
     unsolved_numbers = np.array(unsolved_numbers)
 
-    return (solved_numbers, unsolved_numbers, solved_indexes, unsolved_indexes)
+    return (solved_numbers, unsolved_indexes)
 
 
 def subtract_imposible_numbers_from_section(cells, unsolved_indexes, solved_numbers):
@@ -203,18 +207,17 @@ def subtract_imposible_numbers_from_section(cells, unsolved_indexes, solved_numb
 
 
 def solve_section(cells):
-    solved_numbers, unsolved_numbers, solved_indexes, unsolved_indexes = get_solved_and_unsolved([
-        cells])
+    solved_numbers, unsolved_indexes = get_solved_and_unsolved([cells])
     updated_section = subtract_imposible_numbers_from_section(
         cells, unsolved_indexes, solved_numbers)
     return updated_section
 
 
-def create_solved_board(posibility_board):
+def create_solved_board(posibility_matrix):
     board = []
     for idx in range(9):
         row = []
-        for cell in posibility_board[idx:idx+1, :, :].reshape(9, 9):
+        for cell in posibility_matrix[idx:idx+1, :, :].reshape(9, 9):
             if np.count_nonzero(cell) == 1:
                 # extract solved number and add to row
                 row.append(cell[np.nonzero(cell)[0].tolist()[0]])
@@ -253,3 +256,25 @@ def get_box_by_cell_index(ridx, cidx, board):
         if cidx < 6:
             return board[6:, 3:6]
         return board[6:, 6:]
+
+
+def get_cell_by_index(posibility_matrix, cell):
+    return posibility_matrix[cell[0]:cell[0]+1, cell[1]:cell[1]+1]
+
+
+def get_solved_numbers_in_section(cells):
+    """
+        Get array of solved numbers in section (row, column, box)
+
+        :param cells: a section of posibility board
+        :return:      a flat array of solved numbers in section
+    """
+    temp_list = []
+    for i in range(9):
+        non_zeros = np.count_nonzero(cells[0][i])
+        if non_zeros == 1:
+            index_of_solved_value = np.nonzero(cells[0][i])
+            temp_list.append(cells[0][i][index_of_solved_value])
+
+    temp_list = np.array(temp_list).flatten()
+    return temp_list
