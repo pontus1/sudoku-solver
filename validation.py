@@ -1,4 +1,4 @@
-from utils import get_sections
+from board_utils import get_sections
 import numpy as np
 
 
