@@ -1,8 +1,8 @@
 import unittest
 import numpy as np
-import board_utils as utils
+from Board import Board
 
-board = np.array([
+sudoku_board = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
     [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -12,12 +12,34 @@ board = np.array([
     [0, 6, 0, 0, 0, 0, 2, 8, 0],
     [0, 0, 0, 4, 1, 9, 0, 0, 5],
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
-])
+]
 
 
-class BoardUtils(unittest.TestCase):
+class TestBoard(unittest.TestCase):
+    def test_get_box_by_row_and_col(self):
+        board = Board(sudoku_board)
+        box = board.get_box_by_row_and_col(0, 0)
+        np.testing.assert_array_equal(box, [5, 3, 0, 6, 0, 0, 0, 9, 8])
+        box = board.get_box_by_row_and_col(1, 3)
+        np.testing.assert_array_equal(box, [0, 7, 0, 1, 9, 5, 0, 0, 0])
+        box = board.get_box_by_row_and_col(2, 6)
+        np.testing.assert_array_equal(box, [0, 0, 0, 0, 0, 0, 0, 6, 0])
+        box = board.get_box_by_row_and_col(3, 1)
+        np.testing.assert_array_equal(box, [8, 0, 0, 4, 0, 0, 7, 0, 0])
+        box = board.get_box_by_row_and_col(4, 5)
+        np.testing.assert_array_equal(box, [0, 6, 0, 8, 0, 3, 0, 2, 0])
+        box = board.get_box_by_row_and_col(5, 7)
+        np.testing.assert_array_equal(box, [0, 0, 3, 0, 0, 1, 0, 0, 6])
+        box = board.get_box_by_row_and_col(6, 2)
+        np.testing.assert_array_equal(box, [0, 6, 0, 0, 0, 0, 0, 0, 0])
+        box = board.get_box_by_row_and_col(7, 5)
+        np.testing.assert_array_equal(box, [0, 0, 0, 4, 1, 9, 0, 8, 0])
+        box = board.get_box_by_row_and_col(8, 8)
+        np.testing.assert_array_equal(box, [2, 8, 0, 0, 0, 5, 0, 7, 9])
+
     def test_get_sections(self):
-        rows, columns, boxes = utils.get_sections(board)
+        board = Board(sudoku_board)
+        rows, columns, boxes = board.get_sections()
         np.testing.assert_array_equal(rows[0], [5, 3, 0, 0, 7, 0, 0, 0, 0])
         np.testing.assert_array_equal(rows[1], [6, 0, 0, 1, 9, 5, 0, 0, 0])
         np.testing.assert_array_equal(rows[2], [0, 9, 8, 0, 0, 0, 0, 6, 0])
@@ -49,31 +71,33 @@ class BoardUtils(unittest.TestCase):
         np.testing.assert_array_equal(boxes[8], [2, 8, 0, 0, 0, 5, 0, 7, 9])
 
     def test_get_unsolved_in_section(self):
-        rows, columns, boxes = utils.get_sections(board)
+        board = Board(sudoku_board)
+        # rows, columns, boxes = board.get_sections(board)
 
-        numbers, indexes = utils.get_unsolved_in_section(rows[0])
+        numbers, indexes = board.get_unsolved_in_section(board.get_row(0))
         np.testing.assert_array_equal(numbers, [1, 2, 4, 6, 8, 9])
         np.testing.assert_array_equal(indexes, [2, 3, 5, 6, 7, 8])
-        numbers, indexes = utils.get_unsolved_in_section(rows[4])
+        numbers, indexes = board.get_unsolved_in_section(board.get_row(4))
         np.testing.assert_array_equal(numbers, [2, 5, 6, 7, 9])
         np.testing.assert_array_equal(indexes, [1, 2, 4, 6, 7])
 
-        numbers, indexes = utils.get_unsolved_in_section(columns[0])
+        numbers, indexes = board.get_unsolved_in_section(board.get_column(0))
         np.testing.assert_array_equal(numbers, [1, 2, 3, 9])
         np.testing.assert_array_equal(indexes, [2, 6, 7, 8])
-        numbers, indexes = utils.get_unsolved_in_section(columns[4])
+        numbers, indexes = board.get_unsolved_in_section(board.get_column(4))
         np.testing.assert_array_equal(numbers, [3, 4, 5])
         np.testing.assert_array_equal(indexes, [2, 4, 6])
 
-        numbers, indexes = utils.get_unsolved_in_section(boxes[0])
+        numbers, indexes = board.get_unsolved_in_section(board.get_box(0))
         np.testing.assert_array_equal(numbers, [1, 2, 4, 7])
         np.testing.assert_array_equal(indexes, [2, 4, 5, 6])
-        numbers, indexes = utils.get_unsolved_in_section(boxes[4])
+        numbers, indexes = board.get_unsolved_in_section(board.get_box(4))
         np.testing.assert_array_equal(numbers, [1, 4, 5, 7, 9])
         np.testing.assert_array_equal(indexes, [0, 2, 4, 6, 8])
 
     def test_get_indexes_of_all_unsolved_cells(self):
-        indexes = utils.get_indexes_of_all_unsolved_cells(board)
+        board = Board(sudoku_board)
+        indexes = board.get_indexes_of_all_unsolved_cells()
         np.testing.assert_array_equal(
             indexes, [
                 [0, 2], [0, 3], [0, 5], [0, 6], [0, 7], [0, 8],
@@ -87,49 +111,9 @@ class BoardUtils(unittest.TestCase):
                 [8, 0], [8, 1], [8, 2], [8, 3], [8, 5], [8, 6]
             ])
 
-    def test_get_column_by_index(self):
-        column = utils.get_column_by_index(0, board)
-        np.testing.assert_array_equal(column, [5, 6, 0, 8, 4, 7, 0, 0, 0])
-        column = utils.get_column_by_index(1, board)
-        np.testing.assert_array_equal(column, [3, 0, 9, 0, 0, 0, 6, 0, 0])
-        column = utils.get_column_by_index(2, board)
-        np.testing.assert_array_equal(column, [0, 0, 8, 0, 0, 0, 0, 0, 0])
-        column = utils.get_column_by_index(3, board)
-        np.testing.assert_array_equal(column, [0, 1, 0, 0, 8, 0, 0, 4, 0])
-        column = utils.get_column_by_index(4, board)
-        np.testing.assert_array_equal(column, [7, 9, 0, 6, 0, 2, 0, 1, 8])
-        column = utils.get_column_by_index(5, board)
-        np.testing.assert_array_equal(column, [0, 5, 0, 0, 3, 0, 0, 9, 0])
-        column = utils.get_column_by_index(6, board)
-        np.testing.assert_array_equal(column, [0, 0, 0, 0, 0, 0, 2, 0, 0])
-        column = utils.get_column_by_index(7, board)
-        np.testing.assert_array_equal(column, [0, 0, 6, 0, 0, 0, 8, 0, 7])
-        column = utils.get_column_by_index(8, board)
-        np.testing.assert_array_equal(column, [0, 0, 0, 3, 1, 6, 0, 5, 9])
-
-    def test_get_box_by_cell_indexes(self):
-        box = utils.get_box_by_cell_indexes(0, 0, board)
-        np.testing.assert_array_equal(box, [5, 3, 0, 6, 0, 0, 0, 9, 8])
-        box = utils.get_box_by_cell_indexes(1, 3, board)
-        np.testing.assert_array_equal(box, [0, 7, 0, 1, 9, 5, 0, 0, 0])
-        box = utils.get_box_by_cell_indexes(2, 6, board)
-        np.testing.assert_array_equal(box, [0, 0, 0, 0, 0, 0, 0, 6, 0])
-        box = utils.get_box_by_cell_indexes(3, 1, board)
-        np.testing.assert_array_equal(box, [8, 0, 0, 4, 0, 0, 7, 0, 0])
-        box = utils.get_box_by_cell_indexes(4, 5, board)
-        np.testing.assert_array_equal(box, [0, 6, 0, 8, 0, 3, 0, 2, 0])
-        box = utils.get_box_by_cell_indexes(5, 7, board)
-        np.testing.assert_array_equal(box, [0, 0, 3, 0, 0, 1, 0, 0, 6])
-        box = utils.get_box_by_cell_indexes(6, 2, board)
-        np.testing.assert_array_equal(box, [0, 6, 0, 0, 0, 0, 0, 0, 0])
-        box = utils.get_box_by_cell_indexes(7, 5, board)
-        np.testing.assert_array_equal(box, [0, 0, 0, 4, 1, 9, 0, 8, 0])
-        box = utils.get_box_by_cell_indexes(8, 8, board)
-        np.testing.assert_array_equal(box, [2, 8, 0, 0, 0, 5, 0, 7, 9])
-
     def test_create_posibility_matrix(self):
-        posibility_matrix = utils.create_posibility_matrix(board)
-        print(posibility_matrix)
+        board = Board(sudoku_board)
+        posibility_matrix = board.create_posibility_matrix(board.board)
         np.testing.assert_array_equal(posibility_matrix, [
             [
                 [0, 0, 0, 0, 5, 0, 0, 0, 0],

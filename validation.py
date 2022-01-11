@@ -1,4 +1,4 @@
-from board_utils import get_sections
+from Board import Board
 import numpy as np
 
 
@@ -20,7 +20,7 @@ def contains_duplicates(section: np.ndarray) -> bool:
     return len(np.unique(non_zero_cells)) != len(non_zero_cells)
 
 
-def is_valid_board(board: np.ndarray) -> bool:
+def is_valid_board(board) -> bool:
     """
         Check to see if every section of board only contains unique numbers
         (0 does not count)
@@ -34,7 +34,7 @@ def is_valid_board(board: np.ndarray) -> bool:
         -------
         bool:   True if board is valid, otherwise False
     """
-    rows, columns, boxes = get_sections(board)
+    rows, columns, boxes = board.get_sections()
 
     for row in rows:
         if contains_duplicates(row):

@@ -1,8 +1,9 @@
 import numpy as np
 import sys
 from validation import is_valid_board
-from board_utils import get_indexes_of_all_unsolved_cells, create_posibility_matrix
-from utils import update_board, remove_posibilities_1, remove_posibilities2
+from Board.Board import Board
+# from board_utils import get_indexes_of_all_unsolved_cells, create_posibility_matrix, print_board, update_board
+from utils import remove_posibilities1, remove_posibilities2
 
 # board = np.array([
 #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -16,7 +17,7 @@ from utils import update_board, remove_posibilities_1, remove_posibilities2
 #     [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # ])
 # WIKIPEDIA
-board = np.array([
+board = Board([
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
     [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -70,33 +71,29 @@ if not is_valid_board(board):
     print('Board is not valid')
     sys.exit()
 
-# Print amount of solved cells on board
-total_number_of_cells = 81
-unsolved_cells = len(get_indexes_of_all_unsolved_cells(board))
-number_of_solved_cells = total_number_of_cells - unsolved_cells
-print(
-    f'Unsolved cells when starting: {len(get_indexes_of_all_unsolved_cells(board))}\n')
-
-# # create posibility board (3d matrix)
-posibility_board = create_posibility_matrix(board)
-
-remove_posibilities_1(posibility_board)
-
-
-board = update_board(posibility_board)
-print('Board:')
+# Print starting board and number of unsoved cells
 print(board)
-print('\n\n')
+print(f'Unsolved cells: {len(board)}\n')
+
+posibilities = Board.create_posibility_matrix(board.board)
+
+remove_posibilities1(posibilities)
+
+# Print starting board and number of unsoved cells
+board.update_board(posibilities)
+print(board)
+print(f'Unsolved cells: {len(board)}\n')
+
 
 # TODO: kör tills det tar stopp
-remove_posibilities2(board, posibility_board)
-board = update_board(posibility_board)
+# remove_posibilities2(board, posibilities)
+# board = update_board(posibilities)
 
-print('Posibilities: ', np.count_nonzero(posibility_board))
-board = update_board(posibility_board)
-print('Board:')
+
+print('Posibilities: ', np.count_nonzero(posibilities))
+board.update_board(posibilities)
 print(board)
-print('\n\n')
+print(f'Unsolved cells: {len(board)}\n')
 
 
 # row0 = posibility_board[:1, :, :].reshape(9, 9)  # row 0
