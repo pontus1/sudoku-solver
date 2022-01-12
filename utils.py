@@ -60,7 +60,6 @@ def get_solved_and_unsolved_in_section(section: np.ndarray) -> tuple[np.ndarray,
         section: ndarray
             section to get numbers and indexes from
 
-
         Returns
         -------
         tuple:  ndarray of all solved numbers in section, ndarray of all unsolved indexes in section
