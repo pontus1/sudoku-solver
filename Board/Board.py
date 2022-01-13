@@ -122,42 +122,6 @@ class Board:
         """
         return np.argwhere(self.board == 0)
 
-    # TODO: create Posibilities class
-    @staticmethod
-    def create_posibility_matrix(board):
-        """
-            Creates a 3d matrix from original 2d board where all cells become arrays of possible numbers.
-            Each cell of the 2d board will generate a third axis in its place.
-            A unsolved cell will generate an array with all possible solutions
-            (0 -> [1 2 3 4 5 6 7 8 9])
-            A solved cell will generate an array where all indexes are set to 0 except for index n-1
-            that will be set to n
-            (1 -> [1 0 0 0 0 0 0 0 0])
-            (5 -> [0 0 0 0 5 0 0 0 0])
-
-            Parameters
-            ----------
-            board: ndarray
-                2d array of board
-
-            Returns
-            -------
-            ndarray: 3d matrix representing all posibilities on board passed as arg
-        """
-        posibilities = np.repeat(
-            np.copy(board)[:, :, np.newaxis], 9, axis=2)
-        all_posibilities = np.arange(1, 10)
-        for i in range(9):
-            for j in range(9):
-                val = posibilities[i:i+1, j:j+1, :1]  # 0 or a solved value
-                if val == 0:
-                    posibilities[i:i+1, j:j+1] = all_posibilities
-                else:
-                    new_arr = np.zeros(9)
-                    new_arr[val-1] = val
-                    posibilities[i:i+1, j:j+1] = new_arr
-        return posibilities
-
     def update_board(self, posibility_matrix: np.ndarray):
         board = []
         for idx in range(9):

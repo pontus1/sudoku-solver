@@ -1,8 +1,9 @@
 import unittest
 import numpy as np
 from validation import contains_duplicates, is_valid_board
+from Board.Board import Board
 
-valid_board = np.array([
+valid_board = Board([
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
     [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -14,7 +15,7 @@ valid_board = np.array([
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ])
 
-invalid_board = np.array([
+invalid_board = Board([
     [7, 6, 2, 0, 0, 0, 0, 0, 4],
     [0, 8, 0, 0, 4, 0, 0, 0, 7],
     [0, 5, 0, 0, 2, 8, 0, 1, 0],

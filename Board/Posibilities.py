@@ -1,7 +1,5 @@
-from logging import log
 import numpy as np
 from typing import List
-from Board import Board
 
 
 class Posibilities:
@@ -76,6 +74,8 @@ class Posibilities:
             return self.matrix[6:, 3:6, :]
         if idx == 8:
             return self.matrix[6:, 6:, :]
+        else:
+            raise Exception("Box index must be between 0 and 8")
 
     def set_box(self, new_box, idx) -> None:
         if idx == 0:
