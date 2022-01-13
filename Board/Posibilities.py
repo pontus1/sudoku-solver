@@ -45,36 +45,62 @@ class Posibilities:
                     matrix[i:i+1, j:j+1] = new_arr
         return matrix
 
-    def get_row(self, idx):
+    def get_row(self, idx) -> np.ndarray:
         return self.rows[idx]
 
-    def get_column(self, idx):
-        return self.matrix[:, idx:idx+1, :].reshape(9, 9)
+    def set_row(self, new_row, idx) -> None:
+        self.matrix[idx:idx+1, :, :] = new_row
 
-    def get_box(self, idx):
+    def get_column(self, idx) -> np.ndarray:
+        return self.matrix[:, idx:idx+1, :]
+
+    def set_column(self, new_column, idx) -> None:
+        self.matrix[:, idx:idx+1, :] = new_column
+
+    def get_box(self, idx) -> np.ndarray:
         if idx == 0:
-            return self.matrix[:3, :3, :].reshape(9, 9)
+            return self.matrix[:3, :3, :]
         if idx == 1:
-            return self.matrix[:3, 3:6, :].reshape(9, 9)
+            return self.matrix[:3, 3:6, :]
         if idx == 2:
-            return self.matrix[:3, 6:, :].reshape(9, 9)
+            return self.matrix[:3, 6:, :]
         if idx == 3:
-            return self.matrix[3:6, :3, :].reshape(9, 9)
+            return self.matrix[3:6, :3, :]
         if idx == 4:
-            return self.matrix[3:6, 3:6, :].reshape(9, 9)
+            return self.matrix[3:6, 3:6, :]
         if idx == 5:
-            return self.matrix[3:6, 6:, :].reshape(9, 9)
+            return self.matrix[3:6, 6:, :]
         if idx == 6:
-            return self.matrix[6:, :3, :].reshape(9, 9)
+            return self.matrix[6:, :3, :]
         if idx == 7:
-            return self.matrix[6:, 3:6, :].reshape(9, 9)
+            return self.matrix[6:, 3:6, :]
         if idx == 8:
-            return self.matrix[6:, 6:, :].reshape(9, 9)
+            return self.matrix[6:, 6:, :]
 
-    def get_columns(self):
+    def set_box(self, new_box, idx) -> None:
+        if idx == 0:
+            self.matrix[:3, :3, :] = new_box
+        if idx == 1:
+            self.matrix[:3, 3:6, :] = new_box
+        if idx == 2:
+            self.matrix[:3, 6:, :] = new_box
+        if idx == 3:
+            self.matrix[3:6, :3, :] = new_box
+        if idx == 4:
+            self.matrix[3:6, 3:6, :] = new_box
+        if idx == 5:
+            self.matrix[3:6, 6:, :] = new_box
+        if idx == 6:
+            self.matrix[6:, :3, :] = new_box
+        if idx == 7:
+            self.matrix[6:, 3:6, :] = new_box
+        if idx == 8:
+            self.matrix[6:, 6:, :] = new_box
+
+    def get_columns(self) -> np.ndarray:
         return np.array([self.get_column(idx) for idx in range(9)])
 
-    def get_boxes(self):
+    def get_boxes(self) -> np.ndarray:
         return np.array([self.get_box(idx) for idx in range(9)])
 
     def get_cell(self, indices: List[int]) -> np.ndarray:
@@ -139,24 +165,30 @@ class Posibilities:
 
         return (np.array(solved_numbers).flatten(), unsolved_indexes)
 
-    def remove_duplicates_from_section(self, section: np.ndarray) -> None:
+    def remove_duplicates_from_section(self, section: np.ndarray) -> np.ndarray:
         solved_numbers, unsolved_indexes = self.get_solved_and_unsolved_from_section(
-            section)
+            section.reshape(9, 9))
 
+        cp = np.copy(section).reshape(9, 9)
         for i in unsolved_indexes:
             for j in solved_numbers:
-                section[i][j-1] = 0
+                cp[i][j-1] = 0
+
+        return cp.reshape(section.shape)
 
     def remove_duplicates_from_all_sections(self) -> None:
         while True:
             unsolved_cells_before = self.get_unsolved_cell_indices()
-            # print(unsolved_cells_before)
+
             for idx in range(9):
-                self.remove_duplicates_from_section(self.get_row(idx))
+                self.set_row(self.remove_duplicates_from_section(
+                    self.get_row(idx)), idx)
             # for idx in range(9):
-            #     self.remove_duplicates_from_section(self.get_column(idx))
+                self.set_column(self.remove_duplicates_from_section(
+                    self.get_column(idx)), idx)
             # for idx in range(9):
-            #     self.remove_duplicates_from_section(self.get_box(idx))
+                self.set_box(self.remove_duplicates_from_section(
+                    self.get_box(idx)), idx)
 
             unsolved_cells_after = self.get_unsolved_cell_indices()
 

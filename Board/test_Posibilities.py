@@ -121,7 +121,7 @@ class TestPosibilities(unittest.TestCase):
             ],
         ])
         # COLUMNS
-        np.testing.assert_array_equal(posibilities.columns[0], [
+        np.testing.assert_array_equal(posibilities.columns[0].reshape(9, 9), [
             [0, 0, 0, 0, 5, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -132,7 +132,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.columns[1], [
+        np.testing.assert_array_equal(posibilities.columns[1].reshape(9, 9), [
             [0, 0, 3, 0, 0, 0, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 0, 0, 0, 9],
@@ -143,7 +143,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.columns[2], [
+        np.testing.assert_array_equal(posibilities.columns[2].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 0, 0, 8, 0],
@@ -154,7 +154,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.columns[3], [
+        np.testing.assert_array_equal(posibilities.columns[3].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -165,7 +165,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 0, 0, 4, 0, 0, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.columns[4], [
+        np.testing.assert_array_equal(posibilities.columns[4].reshape(9, 9), [
             [0, 0, 0, 0, 0, 0, 7, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -176,7 +176,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 8, 0],
         ])
-        np.testing.assert_array_equal(posibilities.columns[5], [
+        np.testing.assert_array_equal(posibilities.columns[5].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 5, 0, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -187,7 +187,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.columns[6], [
+        np.testing.assert_array_equal(posibilities.columns[6].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -198,7 +198,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.columns[7], [
+        np.testing.assert_array_equal(posibilities.columns[7].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
@@ -209,7 +209,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 0, 7, 0, 0],
         ])
-        np.testing.assert_array_equal(posibilities.columns[8], [
+        np.testing.assert_array_equal(posibilities.columns[8].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -221,7 +221,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0, 9],
         ])
         # BOXES
-        np.testing.assert_array_equal(posibilities.boxes[0], [
+        np.testing.assert_array_equal(posibilities.boxes[0].reshape(9, 9), [
             [0, 0, 0, 0, 5, 0, 0, 0, 0],
             [0, 0, 3, 0, 0, 0, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -232,7 +232,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0, 9],
             [0, 0, 0, 0, 0, 0, 0, 8, 0],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[1], [
+        np.testing.assert_array_equal(posibilities.boxes[1].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 0, 7, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -243,7 +243,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[2], [
+        np.testing.assert_array_equal(posibilities.boxes[2].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -254,7 +254,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[3], [
+        np.testing.assert_array_equal(posibilities.boxes[3].reshape(9, 9), [
             [0, 0, 0, 0, 0, 0, 0, 8, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -265,7 +265,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[4], [
+        np.testing.assert_array_equal(posibilities.boxes[4].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -276,7 +276,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 2, 0, 0, 0, 0, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[5], [
+        np.testing.assert_array_equal(posibilities.boxes[5].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 3, 0, 0, 0, 0, 0, 0],
@@ -287,7 +287,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[6], [
+        np.testing.assert_array_equal(posibilities.boxes[6].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -298,7 +298,7 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[7], [
+        np.testing.assert_array_equal(posibilities.boxes[7].reshape(9, 9), [
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -309,7 +309,7 @@ class TestPosibilities(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 8, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
         ])
-        np.testing.assert_array_equal(posibilities.boxes[8], [
+        np.testing.assert_array_equal(posibilities.boxes[8].reshape(9, 9), [
             [0, 2, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 8, 0],
             [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -365,21 +365,21 @@ class TestPosibilities(unittest.TestCase):
         np.testing.assert_array_equal(
             unsolved_indexes, [0, 1, 2, 3, 4, 5, 7, 8])
 
-        # solved_numbers, unsolved_indexes = posibilities.get_solved_and_unsolved_from_section(
-        #     posibilities.get_box(0))
-        # np.testing.assert_array_equal(solved_numbers, [5, 3, 6, 9, 8])
-        # np.testing.assert_array_equal(unsolved_indexes, [2, 4, 5, 6])
+        solved_numbers, unsolved_indexes = posibilities.get_solved_and_unsolved_from_section(
+            posibilities.get_box(0).reshape(9, 9))
+        np.testing.assert_array_equal(solved_numbers, [5, 3, 6, 9, 8])
+        np.testing.assert_array_equal(unsolved_indexes, [2, 4, 5, 6])
 
-        # solved_numbers, unsolved_indexes = posibilities.get_solved_and_unsolved_from_section(
-        #     posibilities.get_box(8))
-        # np.testing.assert_array_equal(solved_numbers, [2, 8, 5, 7, 9])
-        # np.testing.assert_array_equal(unsolved_indexes, [2, 3, 4, 6])
+        solved_numbers, unsolved_indexes = posibilities.get_solved_and_unsolved_from_section(
+            posibilities.get_box(8).reshape(9, 9))
+        np.testing.assert_array_equal(solved_numbers, [2, 8, 5, 7, 9])
+        np.testing.assert_array_equal(unsolved_indexes, [2, 3, 4, 6])
 
     def test_remove_duplicates_from_section(self):
         posibilities = Posibilities(board.board)
-        section = posibilities.get_row(0)
-        posibilities.remove_duplicates_from_section(section)
-        np.testing.assert_array_equal(section, [
+        posibilities.set_row(
+            posibilities.remove_duplicates_from_section(posibilities.get_row(0)), 0)
+        np.testing.assert_array_equal(posibilities.get_row(0), [
             [0, 0, 0, 0, 5, 0, 0, 0, 0],
             [0, 0, 3, 0, 0, 0, 0, 0, 0],
             [1, 2, 0, 4, 0, 6, 0, 8, 9],
@@ -391,8 +391,9 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 0, 4, 0, 6, 0, 8, 9]
         ])
         posibilities = Posibilities(board.board)
-        posibilities.remove_duplicates_from_section(posibilities.get_column(0))
-        np.testing.assert_array_equal(posibilities.get_column(0), [
+        posibilities.set_column(posibilities.remove_duplicates_from_section(
+            posibilities.get_column(0)), 0)
+        np.testing.assert_array_equal(posibilities.get_column(0).reshape(9, 9), [
             [0, 0, 0, 0, 5, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 6, 0, 0, 0],
             [1, 2, 3, 0, 0, 0, 0, 0, 9],
@@ -403,123 +404,121 @@ class TestPosibilities(unittest.TestCase):
             [1, 2, 3, 0, 0, 0, 0, 0, 9],
             [1, 2, 3, 0, 0, 0, 0, 0, 9],
         ])
-        # posibilities = Posibilities(board.board)
-        # posibilities.remove_duplicates_from_section(
-        #     posibilities.matrix[:3, :3, :].reshape(9, 9))
-        # print(posibilities.matrix[:3, :3, :].reshape(9, 9))
-        # np.testing.assert_array_equal(posibilities.matrix[:3, :3, :].reshape(9, 9), [
-        #     [0, 0, 0, 0, 5, 0, 0, 0, 0],
-        #     [0, 0, 3, 0, 0, 0, 0, 0, 0],
-        #     [1, 2, 0, 4, 0, 0, 7, 0, 0],
-        #     [0, 0, 0, 0, 0, 6, 0, 0, 0],
-        #     [1, 2, 0, 4, 0, 0, 7, 0, 0],
-        #     [1, 2, 0, 4, 0, 0, 7, 0, 0],
-        #     [1, 2, 0, 4, 0, 0, 7, 0, 0],
-        #     [0, 0, 0, 0, 0, 0, 0, 0, 9],
-        #     [0, 0, 0, 0, 0, 0, 0, 8, 0],
-        # ])
+        posibilities = Posibilities(board.board)
+        posibilities.set_box(posibilities.remove_duplicates_from_section(
+            posibilities.get_box(0)), 0)
+        np.testing.assert_array_equal(posibilities.get_box(0).reshape(9, 9), [
+            [0, 0, 0, 0, 5, 0, 0, 0, 0],
+            [0, 0, 3, 0, 0, 0, 0, 0, 0],
+            [1, 2, 0, 4, 0, 0, 7, 0, 0],
+            [0, 0, 0, 0, 0, 6, 0, 0, 0],
+            [1, 2, 0, 4, 0, 0, 7, 0, 0],
+            [1, 2, 0, 4, 0, 0, 7, 0, 0],
+            [1, 2, 0, 4, 0, 0, 7, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 9],
+            [0, 0, 0, 0, 0, 0, 0, 8, 0],
+        ])
 
     def test_remove_duplicates_from_all_sections(self):
         posibilities = Posibilities(board.board)
         posibilities.remove_duplicates_from_all_sections()
-        print(posibilities.matrix)
         np.testing.assert_array_equal(posibilities.matrix, [
             [
                 [0, 0, 0, 0, 5, 0, 0, 0, 0],
                 [0, 0, 3, 0, 0, 0, 0, 0, 0],
-                [1, 2, 0, 4, 0, 6, 0, 8, 9],
-                [1, 2, 0, 4, 0, 6, 0, 8, 9],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 6, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 7, 0, 0],
-                [1, 2, 0, 4, 0, 6, 0, 8, 9],
-                [1, 2, 0, 4, 0, 6, 0, 8, 9],
-                [1, 2, 0, 4, 0, 6, 0, 8, 9],
-                [1, 2, 0, 4, 0, 6, 0, 8, 9],
+                [0, 0, 0, 0, 0, 0, 0, 8, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 9],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
             ],
             [
                 [0, 0, 0, 0, 0, 6, 0, 0, 0],
-                [0, 2, 3, 4, 0, 0, 7, 8, 0],
-                [0, 2, 3, 4, 0, 0, 7, 8, 0],
+                [0, 0, 0, 0, 0, 0, 7, 0, 0],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 9],
                 [0, 0, 0, 0, 5, 0, 0, 0, 0],
-                [0, 2, 3, 4, 0, 0, 7, 8, 0],
-                [0, 2, 3, 4, 0, 0, 7, 8, 0],
-                [0, 2, 3, 4, 0, 0, 7, 8, 0],
+                [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 8, 0],
             ],
             [
-                [1, 2, 3, 4, 5, 0, 7, 0, 0],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 9],
                 [0, 0, 0, 0, 0, 0, 0, 8, 0],
-                [1, 2, 3, 4, 5, 0, 7, 0, 0],
-                [1, 2, 3, 4, 5, 0, 7, 0, 0],
-                [1, 2, 3, 4, 5, 0, 7, 0, 0],
-                [1, 2, 3, 4, 5, 0, 7, 0, 0],
+                [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 5, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 6, 0, 0, 0],
-                [1, 2, 3, 4, 5, 0, 7, 0, 0],
+                [0, 0, 0, 0, 0, 0, 7, 0, 0],
             ],
             [
                 [0, 0, 0, 0, 0, 0, 0, 8, 0],
-                [1, 2, 0, 4, 5, 0, 7, 0, 9],
-                [1, 2, 0, 4, 5, 0, 7, 0, 9],
-                [1, 2, 0, 4, 5, 0, 7, 0, 9],
+                [0, 0, 0, 0, 5, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 9],
+                [0, 0, 0, 0, 0, 0, 7, 0, 0],
                 [0, 0, 0, 0, 0, 6, 0, 0, 0],
-                [1, 2, 0, 4, 5, 0, 7, 0, 9],
-                [1, 2, 0, 4, 5, 0, 7, 0, 9],
-                [1, 2, 0, 4, 5, 0, 7, 0, 9],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 3, 0, 0, 0, 0, 0, 0],
             ],
             [
                 [0, 0, 0, 4, 0, 0, 0, 0, 0],
-                [0, 2, 0, 0, 5, 6, 7, 0, 9],
-                [0, 2, 0, 0, 5, 6, 7, 0, 9],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 6, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 8, 0],
-                [0, 2, 0, 0, 5, 6, 7, 0, 9],
+                [0, 0, 0, 0, 5, 0, 0, 0, 0],
                 [0, 0, 3, 0, 0, 0, 0, 0, 0],
-                [0, 2, 0, 0, 5, 6, 7, 0, 9],
-                [0, 2, 0, 0, 5, 6, 7, 0, 9],
+                [0, 0, 0, 0, 0, 0, 7, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 9],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
             [
                 [0, 0, 0, 0, 0, 0, 7, 0, 0],
-                [1, 0, 3, 4, 5, 0, 0, 8, 9],
-                [1, 0, 3, 4, 5, 0, 0, 8, 9],
-                [1, 0, 3, 4, 5, 0, 0, 8, 9],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 9],
                 [0, 2, 0, 0, 0, 0, 0, 0, 0],
-                [1, 0, 3, 4, 5, 0, 0, 8, 9],
-                [1, 0, 3, 4, 5, 0, 0, 8, 9],
-                [1, 0, 3, 4, 5, 0, 0, 8, 9],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 8, 0],
+                [0, 0, 0, 0, 5, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 6, 0, 0, 0],
             ],
             [
-                [1, 0, 3, 4, 5, 0, 7, 0, 9],
+                [0, 0, 0, 0, 0, 0, 0, 0, 9],
                 [0, 0, 0, 0, 0, 6, 0, 0, 0],
-                [1, 0, 3, 4, 5, 0, 7, 0, 9],
-                [1, 0, 3, 4, 5, 0, 7, 0, 9],
-                [1, 0, 3, 4, 5, 0, 7, 0, 9],
-                [1, 0, 3, 4, 5, 0, 7, 0, 9],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 5, 0, 0, 0, 0],
+                [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 7, 0, 0],
                 [0, 2, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 8, 0],
-                [1, 0, 3, 4, 5, 0, 7, 0, 9],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
             ],
             [
-                [0, 2, 3, 0, 0, 6, 7, 8, 0],
-                [0, 2, 3, 0, 0, 6, 7, 8, 0],
-                [0, 2, 3, 0, 0, 6, 7, 8, 0],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 8, 0],
+                [0, 0, 0, 0, 0, 0, 7, 0, 0],
                 [0, 0, 0, 4, 0, 0, 0, 0, 0],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 9],
-                [0, 2, 3, 0, 0, 6, 7, 8, 0],
-                [0, 2, 3, 0, 0, 6, 7, 8, 0],
+                [0, 0, 0, 0, 0, 6, 0, 0, 0],
+                [0, 0, 3, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 5, 0, 0, 0, 0],
             ],
             [
-                [1, 2, 3, 4, 5, 6, 0, 0, 0],
-                [1, 2, 3, 4, 5, 6, 0, 0, 0],
-                [1, 2, 3, 4, 5, 6, 0, 0, 0],
-                [1, 2, 3, 4, 5, 6, 0, 0, 0],
+                [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 4, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 5, 0, 0, 0, 0],
+                [0, 2, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 8, 0],
-                [1, 2, 3, 4, 5, 6, 0, 0, 0],
-                [1, 2, 3, 4, 5, 6, 0, 0, 0],
+                [0, 0, 0, 0, 0, 6, 0, 0, 0],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 7, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 9],
             ]
